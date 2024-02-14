@@ -30,5 +30,17 @@ def read_text(message):
     "Функция присылает ответ на неизвестные команды"
     bot.send_message(message.from_user.id, "Я тебя не понимаю, жми /help")
 
+@bot.message_handler(commands=["reg"])
+def read_text(message):
+    "Функция выполняет регистрацию пользователя"
+    bot.send_message(message.from_user.id, "Введите свое имя:")
+
+
+
+
+
+
+
+
 
 bot.polling()
