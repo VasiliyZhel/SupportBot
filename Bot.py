@@ -86,7 +86,7 @@ def get_phone(message):
     bot.register_next_step_handler(message, send_admin_reg)
 
 def send_admin_reg(message):
-    "Функция отправляет уведомляет пользователя о регистрации пользователя и отправляет данные админу"
+    "Функция отправляет уведомляет пользователя о регистрации пользователя и отправляет данные админу, выводит в лог"
     global phone
     phone = message.text
     bot.send_message(message.from_user.id, "Регистрация завершена, теперь вы можете создавать заявки. Чтоб создать заявку жми /new_ticket ;")
@@ -103,15 +103,15 @@ def send_admin_reg(message):
 @bot.message_handler(commands=["new_ticket"]) # Декоратор для создания заявок
 def get_ticket(message):
     "Функция запрашивает описание заявки и отправляет на регистрацию, если пользователя нет в базе"
-    global client_name
-    if client_name == "":
+    global list
+    if message.from_user.id not in list:
         bot.send_message(message.from_user.id, "Чтоб создавать заявки требуется пройти регистрацию, жми /reg")
     else:
         bot.send_message(message.from_user.id, "Введите название заявки")
         bot.register_next_step_handler(message, get_full_ticket)
 
 def get_full_ticket(message):
-    "Функция запривает полдное описание заявки"
+    "Функция запрашивает полное описание заявки"
     global topic
     topic = message.text
     bot.send_message(message.from_user.id, "Опишите проблему")
