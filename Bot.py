@@ -105,15 +105,6 @@ def send_admin_ticket(message):
 
 
 
-
-
-
-
-
-
-
-
-
 @bot.message_handler(content_types=["text"])
 def read_text(message):
     "Функция присылает ответ на неизвестные команды"
