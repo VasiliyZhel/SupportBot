@@ -73,7 +73,6 @@ def show_me(message):
         bot.send_message(message.from_user.id, f"{spiis[1]}, {spiis[2]}, {spiis[3]}, {spiis[4]}")
     else:
         bot.send_message(message.from_user.id, f"Вы еще не прошли регистрацию \nЧтоб зарегистрировать нового пользователя жми /reg")
-    print(spiis)
     user_table.close()
 
 
@@ -163,11 +162,24 @@ def send_admin_ticket(message):
     global prioritet
     prioritet = message.text
     bot.send_message(message.from_user.id, "Заявка создана, свяжемся с вами в ближайшее время")
-    bot.send_message(1362233196, f"{client_name}, {organization}, {role}, {phone}")
     bot.send_message(1362233196, f"{topic}, {full_topic}, {prioritet}")
+    user_table = open('Users.txt', 'r', encoding="utf8")
+    s = user_table.read()
+    stroka = ""
+    spiis = []
+    if str(message.from_user.id) in s:
+        for l in s.split("\n"):
+            if str(message.from_user.id) in l:
+                stroka = l
+                spiis = stroka.split(",")
+        #bot.send_message(message.from_user.id, stroka)
+        bot.send_message(1362233196, f"{spiis[1]}, {spiis[2]}, {spiis[3]}, {spiis[4]}")
+    else:
+        bot.send_message(1362233196, f"Случилась хуйня при создании заявки ")
+    user_table.close()
 
 
-@bot.message_handler(content_types=["text"])
+@bot.message_handler(content_types=["text"]) # Декоратор обработки неизвестных сообщений
 def read_text(message):
     "Функция присылает ответ на неизвестные команды"
     bot.send_message(message.from_user.id, "Я тебя не понимаю, жми /help")
