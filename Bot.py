@@ -86,7 +86,7 @@ def get_phone(message):
     bot.register_next_step_handler(message, send_admin_reg)
 
 def send_admin_reg(message):
-    "Функция отправляет уведомляет пользователя о регистрации пользователя и отправляет данные админу, выводит в лог"
+    "Функция отправляет уведомляет пользователя о регистрации пользователя и отправляет данные админу, выводит в лог, так же добавляет пользователя в файл"
     global phone
     phone = message.text
     bot.send_message(message.from_user.id, "Регистрация завершена, теперь вы можете создавать заявки. Чтоб создать заявку жми /new_ticket ;")
@@ -95,6 +95,10 @@ def send_admin_reg(message):
     b = f"{client_name}, {organization}, {role}, {phone}"
     global list
     list[a] = b
+    user_table = open('Users.txt', 'w', encoding="utf8")
+    for key, value in list.items():
+        user_table.write(f'{key}, {value}\n')
+    user_table.close()
     bot.send_message(1362233196, list.get(message.from_user.id))
     bot.send_message(1362233196, message.from_user)
     print(list)
