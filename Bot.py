@@ -69,7 +69,7 @@ def send_admin(message):
     bot.send_message(1362233196, message.from_user)
 
 
-@bot.message_handler(content_types=["text"])
+@bot.message_handler(content_types=[g"text"])
 def read_text(message):
     "Функция присылает ответ на неизвестные команды"
     bot.send_message(message.from_user.id, "Я тебя не понимаю, жми /help")
